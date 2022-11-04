@@ -25,3 +25,4 @@ Auth::routes();
 Route::get('/home', [HomeController::class, 'index'])->name('home');
 Route::get('admin/dashboard',[adminController::class,'dashboard']);
 Route::resource('admin/roomtype',RoomTypeController::class);
+Route::get('admin/roomtype/{id}/delete',[RoomTypeController::class,'destroy']);

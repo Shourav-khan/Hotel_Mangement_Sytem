@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\RoomType;
 use Illuminate\Http\Request;
 
 class RoomTypeController extends Controller
@@ -15,7 +16,9 @@ class RoomTypeController extends Controller
     {
         //
 
-        return view('admin.index');
+        $roomstype = RoomType::all();
+
+        return view('admin.index',compact(['roomstype']));
     }
 
     /**
@@ -39,6 +42,15 @@ class RoomTypeController extends Controller
     public function store(Request $request)
     {
         //
+
+        $data = new RoomType();
+
+        $data->title = $request->title;
+        $data->description = $request->des;
+
+        $data->save();
+
+        return redirect('admin/roomtype/create')->with('success','Added successfully');
     }
 
     /**
@@ -50,6 +62,11 @@ class RoomTypeController extends Controller
     public function show($id)
     {
         //
+
+        $roomTypes = RoomType::find($id);
+
+        return view('admin.show',compact(['roomTypes']));
+
     }
 
     /**
@@ -61,6 +78,9 @@ class RoomTypeController extends Controller
     public function edit($id)
     {
         //
+        $roomsType = RoomType::find($id);
+
+        return view('admin.edit',compact('roomsType'));
     }
 
     /**
@@ -73,6 +93,17 @@ class RoomTypeController extends Controller
     public function update(Request $request, $id)
     {
         //
+
+        $data = RoomType::find($id);
+
+        $data->title = $request->title;
+        $data->description = $request->des;
+
+        $data->save();
+
+        return redirect('admin/roomtype/'.$id.'/edit')->with('edit','Edit successfully');
+
+
     }
 
     /**
@@ -84,5 +115,11 @@ class RoomTypeController extends Controller
     public function destroy($id)
     {
         //
+
+        RoomType::where('id',$id)->delete();
+
+
+        return redirect('admin/roomtype')->with('delete','Room delete successfully');
+
     }
 }

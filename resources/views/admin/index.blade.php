@@ -9,6 +9,14 @@
 
         </div>
 
+        <div class="mt-2">
+            @if(session()->has('delete'))
+                <div class="alert alert-danger">
+                    {{ session()->get('delete') }}
+                </div>
+            @endif
+        </div>
+
         <div class="">
 
         <table class=" table table-striped  table-warning shadow-lg p-3 mb-5 bg-body rounded text-center">
@@ -22,17 +30,25 @@
             </thead>
             <tbody>
 
+            @if($roomstype)
+
+                @foreach($roomstype as $r)
+
             <tr>
-                <th scope="row">1</th>
-                <td>Title</td>
-                <td>Description</td>
+                <th scope="row">{{$r->id}}</th>
+                <td>{{$r->title}}</td>
+                <td>{{$r->description}}</td>
                 <td>
-                    <a href="#" class="btn btn-primary btn-sm"><i class="fa fa-eye"></i></a>
-                    <a href="#" class="btn btn-info btn-sm"><i class="fa fa-edit"></i></a>
-                    <a href="#" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i></a>
+                    <a href="{{url('admin/roomtype/'.$r->id)}}" class="btn btn-primary btn-sm"><i class="fa fa-eye"></i></a>
+                    <a href="{{url('admin/roomtype/'.$r->id).'/edit'}}" class="btn btn-info btn-sm"><i class="fa fa-edit"></i></a>
+                    <a href="{{url('admin/roomtype/'.$r->id).'/delete'}}" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i></a>
 
                 </td>
             </tr>
+
+                @endforeach
+
+            @endif
 
             </tbody>
         </table>
