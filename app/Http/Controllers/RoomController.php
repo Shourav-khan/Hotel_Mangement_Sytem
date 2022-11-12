@@ -2,23 +2,23 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\RoomType;
+use App\Models\Room;
 use Illuminate\Http\Request;
 
-class RoomTypeController extends Controller
+class RoomController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     * @return \Illuminate\Http\Response
      */
     public function index()
     {
         //
 
-        $roomstype = RoomType::all();
+        $data = Room::all();
 
-        return view('admin.roomType.index',compact(['roomstype']));
+        return view('admin.rooms.index',compact('data'));
     }
 
     /**
@@ -29,8 +29,7 @@ class RoomTypeController extends Controller
     public function create()
     {
         //
-
-        return view('admin.roomType.create');
+        return view('admin.rooms.create');
     }
 
     /**
@@ -43,14 +42,14 @@ class RoomTypeController extends Controller
     {
         //
 
-        $data = new RoomType();
+        $data = new Room();
 
         $data->title = $request->title;
-        $data->description = $request->des;
 
         $data->save();
 
-        return redirect('admin/roomtype/create')->with('success','Added successfully');
+        return redirect('admin/room/create')->with('success','Room Added Successfully');
+
     }
 
     /**
@@ -62,11 +61,6 @@ class RoomTypeController extends Controller
     public function show($id)
     {
         //
-
-        $roomTypes = RoomType::find($id);
-
-        return view('admin.roomType.show',compact(['roomTypes']));
-
     }
 
     /**
@@ -78,9 +72,10 @@ class RoomTypeController extends Controller
     public function edit($id)
     {
         //
-        $roomsType = RoomType::find($id);
 
-        return view('admin.roomType.edit',compact('roomsType'));
+        $room = Room::find($id);
+
+        return view('admin.rooms.edit',compact('room'));
     }
 
     /**
@@ -94,32 +89,28 @@ class RoomTypeController extends Controller
     {
         //
 
-        $data = RoomType::find($id);
+        $data = Room::find($id);
 
-        $data->title = $request->title;
-        $data->description = $request->des;
-
+        $data->title=$request->title;
         $data->save();
 
-        return redirect('admin/roomtype/'.$id.'/edit')->with('edit','Edit successfully');
-
-
+        return redirect('admin/room/'.$id.'/edit')->with('edit','Edit successfully');
     }
 
     /**
      * Remove the specified resource from storage.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
     public function destroy($id)
     {
         //
 
-        RoomType::where('id',$id)->delete();
+        Room::where('id',$id)->delete();
 
+        return redirect('admin/room')->with('delete','Room delete successfully');
 
-        return redirect('admin/roomtype')->with('delete','Room delete successfully');
 
     }
 }
