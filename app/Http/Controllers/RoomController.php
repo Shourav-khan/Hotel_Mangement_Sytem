@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Room;
+use App\Models\RoomType;
 use Illuminate\Http\Request;
 
 class RoomController extends Controller
@@ -10,7 +11,7 @@ class RoomController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
     public function index()
     {
@@ -29,23 +30,25 @@ class RoomController extends Controller
     public function create()
     {
         //
-        return view('admin.rooms.create');
+
+
+        $roomtype= RoomType::all();
+        return view('admin.rooms.create',compact('roomtype'));
     }
 
     /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
     public function store(Request $request)
     {
         //
 
         $data = new Room();
-
+        $data->room_type_id = $request->rt_id;
         $data->title = $request->title;
-
         $data->save();
 
         return redirect('admin/room/create')->with('success','Room Added Successfully');
@@ -61,21 +64,26 @@ class RoomController extends Controller
     public function show($id)
     {
         //
+
+        $roomsAll = Room::find($id);
+
+        return view('admin.rooms.show',compact('roomsAll'));
+
     }
 
     /**
      * Show the form for editing the specified resource.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
     public function edit($id)
     {
         //
 
+        $roomtype = RoomType::all();
         $room = Room::find($id);
-
-        return view('admin.rooms.edit',compact('room'));
+        return view('admin.rooms.edit',compact(['room','roomtype']));
     }
 
     /**
@@ -83,14 +91,14 @@ class RoomController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
     public function update(Request $request, $id)
     {
         //
 
         $data = Room::find($id);
-
+        $data->room_type_id = $request->rt_id;
         $data->title=$request->title;
         $data->save();
 

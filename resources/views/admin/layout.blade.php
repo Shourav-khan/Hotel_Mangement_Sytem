@@ -75,7 +75,7 @@
         <li class="nav-item">
             <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseroom"
                aria-expanded="true" aria-controls="collapseUtilities">
-                <i class="fas fa-fw fa-cog"></i>
+                <i class="fas fa-fw fa-box"></i>
                 <span>Rooms</span>
             </a>
             <div id="collapseroom" class="collapse" aria-labelledby="headingUtilities"

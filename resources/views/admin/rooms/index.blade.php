@@ -24,6 +24,7 @@
             <tr>
                 <th scope="col">#</th>
                 <th scope="col">Title</th>
+                <th scope="col">Room Type</th>
                 <th scope="col">Action</th>
             </tr>
             </thead>
@@ -36,6 +37,7 @@
             <tr>
                 <th scope="row">{{$r->id}}</th>
                 <td>{{$r->title}}</td>
+                <td>{{$r->RoomType->title}}</td>
                 <td>
                     <a href="{{url('admin/room/'.$r->id)}}" class="btn btn-primary btn-sm"><i class="fa fa-eye"></i></a>
                     <a href="{{url('admin/room/'.$r->id).'/edit'}}" class="btn btn-info btn-sm"><i class="fa fa-edit"></i></a>

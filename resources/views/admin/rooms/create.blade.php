@@ -23,6 +23,16 @@
             @csrf
 
             <div class="mb-3">
+                <label for="1" class="form-label text-white font-weight-bold">Room Type</label>
+                <select class="form-select" name="rt_id">
+                    <option selected>----Options----</option>
+                    @foreach($roomtype as $r)
+                    <option value="{{$r->id}}">{{$r->title}}</option>
+                    @endforeach
+                </select>
+            </div>
+
+            <div class="mb-3">
                 <label for="exampleInputEmail1" class="form-label text-white font-weight-bold">Title</label>
                 <input type="text" name="title" class="form-control"  aria-describedby="emailHelp">
             </div>
